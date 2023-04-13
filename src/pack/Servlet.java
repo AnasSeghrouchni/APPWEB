@@ -53,6 +53,7 @@ public class Servlet extends HttpServlet {
 		    	Compte c = new Compte(nom, prenom, motDePasse, email);
 		    	facade.ajouterCompte(c);
 		    }else {
+		    	System.out.print("Problem rencontré");
 		    }
 		}
 	}

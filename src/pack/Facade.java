@@ -14,12 +14,13 @@ public class Facade {
 	 * Verifie si un string est composé uniquement de lettres et d'espaces
 	 * @param str le string à vérifier
 	 * @return un boolean 
+	 * @throws Exceptions 
 	 */
-	private static boolean estNom(String str) {
+	private static boolean estNom(String str) throws NomException {
 	    for (int i = 0; i < str.length(); i++) {
 	        char c = str.charAt(i);
 	        if (!Character.isLetter(c) && !Character.isWhitespace(c)) {
-	            return false;
+	        	throw new NomException("Le nom n'est pas bon, Veuillez réessayer");
 	        }
 	    }
 	    return true;
@@ -29,14 +30,15 @@ public class Facade {
 	 * Vérifie si un string passé en paramètre est dans le format d'une addresse mail
 	 * @param str le string à vérifier
 	 * @return boolean
+	 * @throws MailException 
 	 */
-	private static boolean estMail(String str) {
+	private static boolean estMail(String str) throws MailException {
 		String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
 		Pattern p = Pattern.compile(regex);
-        if (str == null) {
-            return false;
-        }
-        return p.matcher(str).matches();
+        if (!p.matcher(str).matches()) {
+        	throw new MailException("Le format email n'est pas bon");
+        };
+        return true;
 	}
 	
 	/**
@@ -47,8 +49,10 @@ public class Facade {
 	 * @param mdp2
 	 * @param email
 	 * @return
+	 * @throws MailException 
+	 * @throws NomException 
 	 */
-	public boolean verifierInscription(String nom, String prenom, String mdp, String mdp2, String email) {
+	public boolean verifierInscription(String nom, String prenom, String mdp, String mdp2, String email) throws NomException, MailException {
 		if (Facade.estNom(nom) && Facade.estNom(prenom) && Facade.estMail(email) && mdp.equals(mdp2)) {
 			return true;
 		}
