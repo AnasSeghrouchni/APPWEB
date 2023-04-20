@@ -10,9 +10,10 @@ public class Colis {
 	private String depart;
 	private Date date_max;
 	private Membre client;
+	private double prix;
 
 	public Colis(float poids, float taille, String photo, String destination, String depart, Date date_max,
-			Membre client) {
+			Membre client, double prix) {
 		super();
 		this.poids = poids;
 		this.taille = taille;
@@ -21,5 +22,6 @@ public class Colis {
 		this.depart = depart;
 		this.date_max = date_max;
 		this.client = client;
+		this.prix = prix;
 	}
 }
