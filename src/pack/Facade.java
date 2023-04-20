@@ -8,7 +8,7 @@ import javax.ejb.Singleton;
 
 @Singleton
 public class Facade { 
-	Collection<Compte> ListeCompte = new ArrayList<Compte>();
+	Collection<Membre> ListeMembre = new ArrayList<Membre>();
 	
 	/**
 	 * Verifie si un string est composé uniquement de lettres et d'espaces
@@ -59,8 +59,8 @@ public class Facade {
 		return false;
 	}
 	
-	public void ajouterCompte(Compte c) {
-		this.ListeCompte.add(c);
+	public void ajouterCompte(Membre c) {
+		this.ListeMembre.add(c);
 		System.out.println("Add");
 	}
 	
