@@ -8,7 +8,10 @@ public class Membre {
 	String nom;
 	String email;
 	String mdp;
+	String adresse;
+
 	Collection<Colis> ListeColis;
+	Collection<Trajet> ListeTrajets;
 	
 	public Membre(String p, String n, String e,String m) {
 		this.prenom = p;
@@ -16,18 +19,50 @@ public class Membre {
 		this.email = e;
 		this.mdp = m;
 	}
-	
-	public void changePassword(String old_pw, String new_pw) throws IncorrectPWException {
-		if (old_pw.equals(this.mdp)) {
-			this.mdp = new_pw;
-		} else {
-			throw new IncorrectPWException("Ancien mot de passe incorrect");
-		}
+
+	public String getPrenom() {
+		return prenom;
+	}
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPW() {
+		return mdp;
+	}
+
+	public void setPW(String mdp) {
+		this.mdp = mdp;
 	}
 	
-	public boolean verifyPassword(String pw) {
-		return pw.equals(this.mdp);
+
+	public String getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
 	}
 	
+	public void ajouterColis(Colis colis) {
+		ListeColis.add(colis);
+	}
 	
 }

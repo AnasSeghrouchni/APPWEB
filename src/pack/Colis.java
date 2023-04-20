@@ -1,4 +1,5 @@
 package pack;
+import java.util.Collection;
 import java.util.Date;
 
 public class Colis {
@@ -9,11 +10,12 @@ public class Colis {
 	private String destination;
 	private String depart;
 	private Date date_max;
-	private Membre client;
+	private Membre proprietaire;
+	private Collection<Membre> listeLivreurs;
 	private double prix;
 
 	public Colis(float poids, float taille, String photo, String destination, String depart, Date date_max,
-			Membre client, double prix) {
+			Membre proprietaire, double prix) {
 		super();
 		this.poids = poids;
 		this.taille = taille;
@@ -21,7 +23,9 @@ public class Colis {
 		this.destination = destination;
 		this.depart = depart;
 		this.date_max = date_max;
-		this.client = client;
+		this.proprietaire = proprietaire;
 		this.prix = prix;
 	}
+
+	
 }

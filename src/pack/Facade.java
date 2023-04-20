@@ -64,5 +64,16 @@ public class Facade {
 		System.out.println("Add");
 	}
 	
+	public void changePassword(Membre client, String old_pw, String new_pw) throws IncorrectPWException {
+		if (old_pw.equals(client.getPW())) {
+			client.setPW(new_pw);
+		} else {
+			throw new IncorrectPWException("Ancien mot de passe incorrect");
+		}
+	}
+	
+	public boolean verifyPassword(Membre client, String pw) {
+		return pw.equals(client.getPW());
+	}
 
 } 
