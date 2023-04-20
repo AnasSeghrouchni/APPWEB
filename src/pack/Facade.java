@@ -2,6 +2,7 @@ package pack;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 import javax.ejb.Singleton;
@@ -75,5 +76,9 @@ public class Facade {
 	public boolean verifyPassword(Membre client, String pw) {
 		return pw.equals(client.getPW());
 	}
-
+	
+	public void deposerAnnonce(Membre client, float poids, float taille, String photo, String depart, Date date_max, double prix) {
+		Colis c = new Colis(poids, taille, photo, client.getAdresse(), depart, date_max, client, prix);
+		client.ajouterColis(c);
+	}
 } 
