@@ -1,6 +1,9 @@
 package pack;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Set;
 
 public class Membre {
 
@@ -12,12 +15,15 @@ public class Membre {
 
 	Collection<Colis> ListeColis;
 	Collection<Trajet> ListeTrajets;
+	HashMap<Membre, ArrayList<String>> ListeAvis;
+
 	
-	public Membre(String p, String n, String e,String m) {
-		this.prenom = p;
+	public Membre(String n, String p, String e, String adr, String m) {
 		this.nom = n;
+		this.prenom = p;
 		this.email = e;
 		this.mdp = m;
+		this.adresse = adr;
 	}
 
 	public String getPrenom() {
@@ -63,6 +69,15 @@ public class Membre {
 	
 	public void ajouterColis(Colis colis) {
 		ListeColis.add(colis);
+	}
+
+	public void ajouterAvis(Membre client, String avis){
+		if (ListeAvis.containsKey(client)) ListeAvis.get(client).add(avis);
+		else {
+			ArrayList<String> a = new ArrayList<String>();
+			a.add(avis);
+			ListeAvis.put(client, a);
+		}
 	}
 	
 }
