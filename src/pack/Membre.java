@@ -5,26 +5,36 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 
-public class Membre {
+import javax.persistence.*
+;
 
+@Entity
+public class Membre {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	int id;
 	String prenom;
 	String nom;
 	String email;
 	String mdp;
 	String adresse;
-
-	Collection<Colis> ListeColis;
-	Collection<Trajet> ListeTrajets;
-	HashMap<Membre, ArrayList<String>> ListeAvis;
-
 	
-	public Membre(String n, String p, String e, String adr, String m) {
-		this.nom = n;
-		this.prenom = p;
-		this.email = e;
-		this.mdp = m;
-		this.adresse = adr;
-	}
+	@OneToMany
+	Collection<Colis> ListeColis;
+	
+	@ManyToMany
+	Collection<Colis> ListeColisLivreur;
+	
+	@OneToMany(mappedBy="Cible")
+	Collection<Avis> ListeAvisRecu;
+	
+	@OneToMany(mappedBy="Auteur")
+	Collection<Avis> ListeAvisRedige;
+	
+
+	public Membre() {}
+	
 
 	public String getPrenom() {
 		return prenom;
@@ -50,11 +60,11 @@ public class Membre {
 		this.email = email;
 	}
 
-	public String getPW() {
+	public String getMdp() {
 		return mdp;
 	}
 
-	public void setPW(String mdp) {
+	public void setMdp(String mdp) {
 		this.mdp = mdp;
 	}
 	
@@ -70,14 +80,36 @@ public class Membre {
 	public void ajouterColis(Colis colis) {
 		ListeColis.add(colis);
 	}
+	
 
-	public void ajouterAvis(Membre client, String avis){
-		if (ListeAvis.containsKey(client)) ListeAvis.get(client).add(avis);
-		else {
-			ArrayList<String> a = new ArrayList<String>();
-			a.add(avis);
-			ListeAvis.put(client, a);
-		}
+	public Collection<Colis> getListeColis() {
+		return ListeColis;
 	}
+
+
+	public void setListeColis(Collection<Colis> listeColis) {
+		ListeColis = listeColis;
+	}
+
+
+	public Collection<Avis> getListeAvisRecu() {
+		return ListeAvisRecu;
+	}
+
+
+	public void setListeAvisRecu(Collection<Avis> listeAvisRecu) {
+		ListeAvisRecu = listeAvisRecu;
+	}
+
+
+	public Collection<Avis> getListeAvisRedige() {
+		return ListeAvisRedige;
+	}
+
+
+	public void setListeAvisRedige(Collection<Avis> listeAvisRedige) {
+		ListeAvisRedige = listeAvisRedige;
+	}
+
 	
 }
