@@ -16,6 +16,7 @@ public class FacadeMembre {
     private EntityManager em;
 
     @POST
+    @Path("/createMembre")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Membre createMembre(Membre membre) {
