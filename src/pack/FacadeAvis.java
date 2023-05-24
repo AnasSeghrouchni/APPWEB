@@ -20,6 +20,7 @@ public class FacadeAvis {
 	private EntityManager em;
 	
 	@POST
+	@Path("/createavis")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Avis createAvis(Avis avis) {
@@ -28,14 +29,14 @@ public class FacadeAvis {
 	}
 	
     @GET
-    @Path("/{id}")
+    @Path("/getavisbyid/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Avis getAvisbyId(@PathParam("id") Long id) {
         return em.find(Avis.class, id);
     }
     
     @DELETE
-    @Path("/{id}")
+    @Path("/deleteavis/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Avis deleteAvis(@PathParam("id") Long id) {
         Avis avis = em.find(Avis.class, id);

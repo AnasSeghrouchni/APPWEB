@@ -44,6 +44,16 @@ public class Membre {
 		this.prenom = prenom;
 	}
 
+	public Collection<Colis> getListeColisLivreur() {
+		return ListeColisLivreur;
+	}
+
+
+	public void setListeColisLivreur(Collection<Colis> listeColisLivreur) {
+		ListeColisLivreur = listeColisLivreur;
+	}
+
+
 	public String getNom() {
 		return nom;
 	}

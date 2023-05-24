@@ -25,14 +25,14 @@ public class FacadeMembre {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/getmembrebyid/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Membre getMembrebyId(@PathParam("id") Long id) {
         return em.find(Membre.class, id);
     }
 
     @PUT
-    @Path("/{id_m1}/{id_m2}")
+    @Path("/updatemembre/{id_m1}/{id_m2}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Membre updateMembre(@PathParam("id_m1") Long id_m1, @PathParam("id_m2") Long id_m2) {
@@ -47,7 +47,7 @@ public class FacadeMembre {
     }
 
     @PUT
-    @Path("/{id_membre}")
+    @Path("/addavis/{id_membre}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Membre addAvisMembre(@PathParam("id_membre") Long id, Avis avis) {
@@ -60,7 +60,7 @@ public class FacadeMembre {
     }
 
     @PUT
-    @Path("/{id_membre}/{id_colis}")
+    @Path("/addcolis/{id_membre}/{id_colis}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Membre addColisMembre(@PathParam("id_membre") Long id_membre, @PathParam("id_colis") Long id_colis) {
@@ -74,7 +74,7 @@ public class FacadeMembre {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("deleteuser/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Membre deleteUser(@PathParam("id") Long id) {
         Membre user = em.find(Membre.class, id);
@@ -87,5 +87,37 @@ public class FacadeMembre {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Membre> getAllMembres() {
         return em.createQuery("SELECT m FROM Membre m", Membre.class).getResultList();
+    }
+    
+    @GET
+    @Path("/getallcolis/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Collection<Colis> getAllColis(@PathParam("id") Long id) {
+    	Membre m = em.find(Membre.class, id);
+        return m.getListeColis();
+    }
+    
+    @GET
+    @Path("/getallcolislivreur/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Collection<Colis> getAllColisLivreur(@PathParam("id") Long id) {
+    	Membre m = em.find(Membre.class, id);
+        return m.getListeColisLivreur();
+    }
+    
+    @GET
+    @Path("/getallavisrecu/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Collection<Avis> getAllAvisRecu(@PathParam("id") Long id) {
+    	Membre m = em.find(Membre.class, id);
+        return m.getListeAvisRecu();
+    }
+    
+    @GET
+    @Path("/getallavisredige/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Collection<Avis> getAllAvisRedige(@PathParam("id") Long id) {
+    	Membre m = em.find(Membre.class, id);
+        return m.getListeAvisRedige();
     }
 }
