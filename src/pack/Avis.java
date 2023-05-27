@@ -53,6 +53,14 @@ public class Avis {
 	public void setCible(Membre cible) {
 		Cible = cible;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 
 }

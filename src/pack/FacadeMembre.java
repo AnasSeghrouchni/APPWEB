@@ -1,10 +1,16 @@
 package pack;
 
 import javax.ejb.Singleton;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
+
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -23,14 +29,29 @@ public class FacadeMembre {
         em.persist(membre);
         return membre;
     }
-
+    
+    @POST
+    @Path("connect")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response connectMembre(Membre membre) {
+    	Membre exMembre = em.createQuery("SELECT m FROM Membre m WHERE m.email = :mail", Membre.class)
+    						.setParameter("mail", membre.getEmail())
+    						.getSingleResult();
+    	if(exMembre == null || !exMembre.getMdp().equals(membre.getMdp())) {
+    		return Response.status(Response.Status.UNAUTHORIZED).build();
+    	}
+    	return Response.ok(exMembre).build();
+    }
+    
+    
     @GET
     @Path("/getmembrebyid/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Membre getMembrebyId(@PathParam("id") Long id) {
         return em.find(Membre.class, id);
     }
-
+    
     @PUT
     @Path("/updatemembre/{id_m1}/{id_m2}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -86,7 +107,7 @@ public class FacadeMembre {
     @Path("/getallmembres")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Membre> getAllMembres() {
-        return em.createQuery("SELECT m FROM Membre m", Membre.class).getResultList();
+        return em.createQuery("select m FROM Membre m", Membre.class).getResultList();
     }
     
     @GET
@@ -97,13 +118,13 @@ public class FacadeMembre {
         return m.getListeColis();
     }
     
-    @GET
-    @Path("/getallcolislivreur/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Collection<Colis> getAllColisLivreur(@PathParam("id") Long id) {
-    	Membre m = em.find(Membre.class, id);
-        return m.getListeColisLivreur();
-    }
+//    @GET
+//    @Path("/getallcolislivreur/{id}")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Collection<Colis> getAllColisLivreur(@PathParam("id") Long id) {
+//    	Membre m = em.find(Membre.class, id);
+//        return m.getListeColisLivreur();
+//    }
     
     @GET
     @Path("/getallavisrecu/{id}")

@@ -13,27 +13,27 @@ public class Membre {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	int id;
-	String prenom;
-	String nom;
-	String email;
-	String mdp;
-	String adresse;
+	private int id;
 	
-	@OneToMany
+	private String prenom;
+	private String nom;
+	private String email;
+	private String mdp;
+	private String adresse;
+	
+	@OneToMany(fetch=FetchType.EAGER)
 	Collection<Colis> ListeColis;
 	
-	@ManyToMany
-	Collection<Colis> ListeColisLivreur;
 	
-	@OneToMany(mappedBy="Cible")
+	@OneToMany(mappedBy="Cible", fetch=FetchType.EAGER)
 	Collection<Avis> ListeAvisRecu;
 	
-	@OneToMany(mappedBy="Auteur")
+	@OneToMany(mappedBy="Auteur", fetch=FetchType.EAGER)
 	Collection<Avis> ListeAvisRedige;
 	
 
-	public Membre() {}
+	public Membre() {
+	}
 	
 
 	public String getPrenom() {
@@ -42,15 +42,6 @@ public class Membre {
 
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
-	}
-
-	public Collection<Colis> getListeColisLivreur() {
-		return ListeColisLivreur;
-	}
-
-
-	public void setListeColisLivreur(Collection<Colis> listeColisLivreur) {
-		ListeColisLivreur = listeColisLivreur;
 	}
 
 
@@ -119,6 +110,16 @@ public class Membre {
 
 	public void setListeAvisRedige(Collection<Avis> listeAvisRedige) {
 		ListeAvisRedige = listeAvisRedige;
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	
