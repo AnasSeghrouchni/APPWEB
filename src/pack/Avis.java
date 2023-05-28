@@ -18,9 +18,9 @@ public class Avis {
 	private String commentaire;
 	
 	@ManyToOne
-	private Membre Auteur;
+	private Membre auteur;
 	@ManyToOne
-	private Membre Cible;
+	private Membre cible;
 	
 	
 	public Avis() {};
@@ -39,19 +39,19 @@ public class Avis {
 	}
 
 	public Membre getAuteur() {
-		return Auteur;
+		return auteur;
 	}
 
 	public void setAuteur(Membre auteur) {
-		Auteur = auteur;
+		this.auteur = auteur;
 	}
 
 	public Membre getCible() {
-		return Cible;
+		return cible;
 	}
 
 	public void setCible(Membre cible) {
-		Cible = cible;
+		this.cible = cible;
 	}
 
 	public int getId() {

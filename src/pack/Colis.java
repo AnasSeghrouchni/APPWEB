@@ -26,7 +26,6 @@ public class Colis {
 	private double prix;
 	private Status status;
 	
-	@JsonIgnore
 	@ManyToOne
 	private Membre proprietaire;
 	
@@ -36,7 +35,7 @@ public class Colis {
 
 
 	
-	public Colis() {};
+	public Colis() {setStatusColis(Status.NON_LIVRE);};
 	
 	public void setListeLivreurs(Membre livreur){
 		if (!listePotentielLivreurs.contains(livreur)) listePotentielLivreurs.add(livreur);
@@ -47,7 +46,7 @@ public class Colis {
 	public void setStatusColis(Status status){
 		this.status = status;
 	}
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 	public float getPoids() {

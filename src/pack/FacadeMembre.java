@@ -26,7 +26,14 @@ public class FacadeMembre {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createMembre(Membre membre) {
-        em.persist(membre);
+    	String email = membre.getEmail();
+    	List<Membre> membres = em.createQuery("SELECT m FROM Membre m WHERE m.email = :email", Membre.class)
+        						.setParameter("email", email)
+        						.getResultList();
+    	if (!membres.isEmpty()) {
+    		return Response.status(Response.Status.UNAUTHORIZED).build();
+    	}
+    	em.persist(membre);
         return Response.ok(membre).build();
     }
     
@@ -53,20 +60,40 @@ public class FacadeMembre {
     }
     
     @PUT
-    @Path("/updatemembre/{id_m1}/{id_m2}")
+    @Path("/updatemembre")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Membre updateMembre(@PathParam("id_m1") int id_m1, @PathParam("id_m2") int id_m2) {
-        Membre ancien_m = em.find(Membre.class, id_m1);
-        Membre membre = em.find(Membre.class, id_m2);
+    public Response updateMembre(@QueryParam("id") int memberId, Membre membre) {
+    	Membre ancien_m = em.find(Membre.class, memberId);
+    	System.out.println("");
+    	System.out.println("member id = ");
+    	System.out.println(memberId);
+    	if (ancien_m == null) { 
+    		System.out.println("Ancien_m = null");
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    	
+    	String email_ancien = ancien_m.getEmail();
+    	String emailnew = membre.getEmail();
+    	if (!email_ancien.equals(emailnew)) {
+    		List<Membre> membres = em.createQuery("SELECT m FROM Membre m WHERE m.email = :email", Membre.class)
+					.setParameter("email", emailnew)
+					.getResultList();
+			if (!membres.isEmpty()) {
+	    		System.out.println("Adress = adress");
+				return Response.status(Response.Status.UNAUTHORIZED).build();
+			}
+    	}
         ancien_m.setAdresse(membre.getAdresse());
         ancien_m.setEmail(membre.getEmail());
         ancien_m.setNom(membre.getNom());
         ancien_m.setPrenom(membre.getPrenom());
+        ancien_m.setMdp(membre.getMdp());
         em.merge(ancien_m);
-        return ancien_m;
+        return Response.ok(ancien_m).build();
+    	
     }
-
+    
     @PUT
     @Path("/addavis/{id_membre}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -111,9 +138,9 @@ public class FacadeMembre {
     }
     
     @GET
-    @Path("/getallcolis/{id}")
+    @Path("/getallcolis")
     @Produces(MediaType.APPLICATION_JSON)
-    public Collection<Colis> getAllColis(@PathParam("id") int id) {
+    public Collection<Colis> getAllColis(@QueryParam("id") int id) {
     	Membre m = em.find(Membre.class, id);
         return m.getListeColis();
     }
