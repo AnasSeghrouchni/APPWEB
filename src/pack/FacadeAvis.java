@@ -31,14 +31,14 @@ public class FacadeAvis {
     @GET
     @Path("/getavisbyid/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Avis getAvisbyId(@PathParam("id") Long id) {
+    public Avis getAvisbyId(@PathParam("id") int id) {
         return em.find(Avis.class, id);
     }
     
     @DELETE
     @Path("/deleteavis/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Avis deleteAvis(@PathParam("id") Long id) {
+    public Avis deleteAvis(@PathParam("id") int id) {
         Avis avis = em.find(Avis.class, id);
         em.remove(avis);
         return avis;

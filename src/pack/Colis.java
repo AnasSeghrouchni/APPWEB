@@ -9,20 +9,20 @@ public class Colis {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	int id;
+	private int id;
 	
-	
+	private String nom;
 	private float poids;
 	private float taille;
 	private String photo;
 	private String destination;
 	private String depart;
-	private Date date_max;
+	private String date_max;
 	
 	@ManyToOne
 	private Membre proprietaire;
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	private Collection<Membre> listePotentielLivreurs;
 	private double prix;
 	private Status status;
@@ -33,19 +33,6 @@ public class Colis {
 	
 	public Colis() {};
 	
-	public Colis(Membre proprietaire, float poids, float taille, String photo, String depart, String destination, Date date_max,
-			 double prix) {
-		super();
-		this.proprietaire = proprietaire;
-		this.poids = poids;
-		this.taille = taille;
-		this.photo = photo;
-		this.destination = destination;
-		this.depart = depart;
-		this.date_max = date_max;
-		this.prix = prix;
-		this.status = Status.NON_LIVRE;
-	}
 	public void setListeLivreurs(Membre livreur){
 		if (!listePotentielLivreurs.contains(livreur)) listePotentielLivreurs.add(livreur);
 	}
@@ -55,11 +42,8 @@ public class Colis {
 	public void setStatusColis(Status status){
 		this.status = status;
 	}
-	public int getId() {
+	public long getId() {
 		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
 	}
 	public float getPoids() {
 		return poids;
@@ -91,10 +75,10 @@ public class Colis {
 	public void setDepart(String depart) {
 		this.depart = depart;
 	}
-	public Date getDate_max() {
+	public String getDate_max() {
 		return date_max;
 	}
-	public void setDate_max(Date date_max) {
+	public void setDate_max(String date_max) {
 		this.date_max = date_max;
 	}
 	public Membre getProprietaire() {
@@ -120,6 +104,18 @@ public class Colis {
 	}
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	
