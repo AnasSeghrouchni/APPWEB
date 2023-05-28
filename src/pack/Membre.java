@@ -8,6 +8,8 @@ import java.util.Set;
 import javax.persistence.*
 ;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Membre {
 	
@@ -21,15 +23,17 @@ public class Membre {
 	private String mdp;
 	private String adresse;
 	
-	@OneToMany(fetch=FetchType.EAGER)
-	Collection<Colis> ListeColis;
+	@JsonIgnore
+	@OneToMany(mappedBy="proprietaire", fetch=FetchType.EAGER)
+	private Collection<Colis> ListeColis;
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy="Cible", fetch=FetchType.EAGER)
-	Collection<Avis> ListeAvisRecu;
+	private Collection<Avis> ListeAvisRecu;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="Auteur", fetch=FetchType.EAGER)
-	Collection<Avis> ListeAvisRedige;
+	private Collection<Avis> ListeAvisRedige;
 	
 
 	public Membre() {

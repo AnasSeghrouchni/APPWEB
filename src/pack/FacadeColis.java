@@ -20,6 +20,8 @@ import javax.ws.rs.core.Response;
 
 import org.w3c.dom.stylesheets.MediaList;
 
+import pack.Colis.Status;
+
 @Path("/colis")
 @Singleton
 public class FacadeColis {
@@ -44,6 +46,7 @@ public class FacadeColis {
     	Collection<Membre> lm = c.getListePotentielLivreurs();
     	lm.add(membre);
     	c.setListePotentielLivreurs(lm);
+    	c.setStatus(Status.CHOISI);
     	em.merge(c);
     	return c;
     }

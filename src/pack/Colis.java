@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Colis {
 
@@ -11,6 +13,9 @@ public class Colis {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
+	enum Status {
+		NON_LIVRE, CHOISI, EN_COURS, LIVRE
+	}
 	private String nom;
 	private float poids;
 	private float taille;
@@ -18,18 +23,18 @@ public class Colis {
 	private String destination;
 	private String depart;
 	private String date_max;
+	private double prix;
+	private Status status;
 	
+	@JsonIgnore
 	@ManyToOne
 	private Membre proprietaire;
 	
 	@ManyToMany(fetch=FetchType.EAGER)
 	private Collection<Membre> listePotentielLivreurs;
-	private double prix;
-	private Status status;
 
-	enum Status {
-		NON_LIVRE, CHOISI, EN_COURS, LIVRE
-	}
+
+
 	
 	public Colis() {};
 	
